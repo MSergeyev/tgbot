@@ -1,0 +1,4 @@
+language: java
+jdk:
+  - corretto-11
+script: mvn clean install - DskipTests
