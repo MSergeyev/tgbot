@@ -8,6 +8,7 @@ public class ActiveChat {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "chat_id")

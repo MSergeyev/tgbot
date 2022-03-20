@@ -1,1 +1,1 @@
-INSERT INTO incomes (id,chat_id, income) VALUES (13456, 4, 3000);
+INSERT INTO incomes ( id ,chat_id, income) VALUES (7,4, 3000);

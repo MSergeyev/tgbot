@@ -13,6 +13,7 @@ public class Spend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
 
@@ -21,7 +22,5 @@ public class Spend {
 
     @Column(name = "spend")
     private BigDecimal spend;
-
-
 
 }
