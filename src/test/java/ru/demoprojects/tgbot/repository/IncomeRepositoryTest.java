@@ -11,16 +11,18 @@ import java.util.List;
 import java.util.Optional;
 
 
-@DataJpaTest
+@DataJpaTest //настройка теста для JPA
 class IncomeRepositoryTest {
 
-    @Autowired
+    @Autowired//заглушка проверяемого репозитория
     private IncomeRepository incomeRepository;
 
+    //наполняем базу произвольными значениями
     @Test
     public void testRepo(){
         for (int i =0; i< 10; i++, incomeRepository.save(new Income())){
             final List<Income> found = incomeRepository.findAll();
+            //проверяем в базе лежить то кол-во что полоижи
             Assert.assertEquals(10, found.size());      }
     }
     @Test

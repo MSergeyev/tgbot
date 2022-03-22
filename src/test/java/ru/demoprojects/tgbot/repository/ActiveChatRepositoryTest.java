@@ -12,16 +12,17 @@ import java.util.Optional;
 
 @DataJpaTest
 class ActiveChatRepositoryTest {
+
     @Autowired
     private ActiveChatRepository activeChatRepository;
 
     @Test
     public void testRepo(){
-        final ActiveChat activeChat = new ActiveChat();
-        activeChat.setChatId(12345L);
-        activeChatRepository.save(activeChat);
-        Optional<ActiveChat> activeChatByChatId = activeChatRepository.findActiveChatByChatId(12345L);
-        Assert.assertTrue(activeChatByChatId.isPresent());
+        final ActiveChat activeChat = new ActiveChat();//экземпляр класса
+        activeChat.setChatId(12345L);//заполняем значением
+        activeChatRepository.save(activeChat);//сохраняем в базе
+        Optional<ActiveChat> activeChatByChatId = activeChatRepository.findActiveChatByChatId(12345L);//ищем в базе
+        Assert.assertTrue(activeChatByChatId.isPresent());//ншли ли объект
         Assert.assertEquals(Optional.of(1345L), activeChatByChatId.get().getChatId());
     }
 

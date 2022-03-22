@@ -23,8 +23,9 @@ public class TgbotApplication {
 		try {
 			Session session = factory.getCurrentSession();
 			session.beginTransaction();
-			Spend sp = session.get(Spend.class,1);
-			sp.getChatId();
+//			Spend sp = session.get(Spend.class,1);
+//			sp.getChatId();
+			session.createQuery("update Spend set id=1 where spend=123").executeUpdate();
 			session.getTransaction().commit();
 
 		}finally {
