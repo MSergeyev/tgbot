@@ -1,14 +1,19 @@
 package ru.demoprojects.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.demoprojects.tgbot.dto.ValuteCursOnDate;
 import ru.demoprojects.tgbot.entity.ActiveChat;
+import ru.demoprojects.tgbot.llogger.StepsLog;
 import ru.demoprojects.tgbot.repository.ActiveChatRepository;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScheduleService {
 
+    private static final Logger LOGGER = LogManager.getLogger(StepsLog.class);
     private final ActiveChatRepository activeChatRepository;
     private final BotService botService;
     private final CentralRussianBankService centralRussianBankService;
@@ -41,7 +47,7 @@ public class ScheduleService {
                 previousRates.addAll(currentRates);
             }
         } catch (DatatypeConfigurationException e) {
-            log.error("Возникла ошибка сервисов");
+            LOGGER.error("Возникла ошибка сервисов"+(new File("log.txt")));
         }
     }
 }

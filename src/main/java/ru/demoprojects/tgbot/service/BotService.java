@@ -1,7 +1,11 @@
 package ru.demoprojects.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,12 +16,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.demoprojects.tgbot.dto.ValuteCursOnDate;
 import ru.demoprojects.tgbot.entity.ActiveChat;
+import ru.demoprojects.tgbot.llogger.StepsLog;
 import ru.demoprojects.tgbot.repository.ActiveChatRepository;
 
 
 
 import javax.annotation.PostConstruct;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +29,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class BotService extends TelegramLongPollingBot {
 
-
+    private static final Logger LOGGER = LogManager.getLogger(StepsLog.class);
     private final CentralRussianBankService centralRussianBankService;
     private final ActiveChatRepository activeChatRepository;
     private final Map<Long, List<String>> previousCommands = new ConcurrentHashMap<>();
@@ -91,7 +96,7 @@ public class BotService extends TelegramLongPollingBot {
                 activeChatRepository.save(activeChat);
             }
         } catch (Exception e) {
-            log.error("Возникла неизвестная проблема, сообщите пожалуйста администратору", e);
+            LOGGER.error("Возникла неизвестная проблема, сообщите пожалуйста администратору", e);
         }
     }
 
@@ -118,7 +123,7 @@ public class BotService extends TelegramLongPollingBot {
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {
-                log.error("Не удалось отправить сообщение", e);
+                LOGGER.error("Не удалось отправить сообщение", e);
             }
         }
     }

@@ -15,11 +15,12 @@ class SpendRepositoryTest {
     private SpendRepository spendRepository;
 
     @Test
-    public void testRepo(){
-        for (int i=0; i<10; i++, spendRepository.save(new Spend())){
+    public void testRepo() {
+        for (int i = 0; i < 10; i++, spendRepository.save(new Spend())) {
             final List<Spend> found = spendRepository.findAll();
             Assert.assertEquals(10, found.size());
 
         }
 
-    }}
+    }
+}
