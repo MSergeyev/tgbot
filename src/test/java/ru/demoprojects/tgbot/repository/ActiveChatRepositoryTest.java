@@ -3,6 +3,7 @@ package ru.demoprojects.tgbot.repository;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.demoprojects.tgbot.entity.ActiveChat;
@@ -25,7 +26,6 @@ class ActiveChatRepositoryTest {
         Assert.assertTrue(activeChatByChatId.isPresent());//ншли ли объект
         Assert.assertEquals(Optional.of(1345L), activeChatByChatId.get().getChatId());
     }
-
 
     @Test
     public void testRepo_notFound(){
