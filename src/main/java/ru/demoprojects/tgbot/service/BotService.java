@@ -1,11 +1,9 @@
 package ru.demoprojects.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,14 +18,12 @@ import ru.demoprojects.tgbot.llogger.StepsLog;
 import ru.demoprojects.tgbot.repository.ActiveChatRepository;
 
 
-
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -52,7 +48,6 @@ public class BotService extends TelegramLongPollingBot {
     private String name;
 
 
-
     private void putPreviousCommand(Long chatId, String command) {
         if (previousCommands.get(chatId) == null) {
             List<String> commands = new ArrayList<>();
@@ -72,6 +67,7 @@ public class BotService extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
+
         try {
             SendMessage response = new SendMessage();
             Long chatId = message.getChatId();
