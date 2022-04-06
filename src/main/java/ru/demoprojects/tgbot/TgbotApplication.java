@@ -1,6 +1,8 @@
 package ru.demoprojects.tgbot;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -10,9 +12,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class TgbotApplication {
 
+	private static Logger logger = LoggerFactory.getLogger(TgbotApplication.class);
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(TgbotApplication.class, args);
+		logger.trace("It is a trace logger.");
 
 //		SessionFactory factory = new Configuration()
 //				.configure("hibernate.cfg.xml")

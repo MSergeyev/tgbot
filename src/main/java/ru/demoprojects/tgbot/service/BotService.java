@@ -3,7 +3,8 @@ package ru.demoprojects.tgbot.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,18 +13,15 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.demoprojects.tgbot.TgbotApplication;
 import ru.demoprojects.tgbot.dto.ValuteCursOnDate;
 import ru.demoprojects.tgbot.entity.ActiveChat;
 import ru.demoprojects.tgbot.llogger.StepsLog;
 import ru.demoprojects.tgbot.repository.ActiveChatRepository;
-
-
 import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 
 @Service
@@ -31,7 +29,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class BotService extends TelegramLongPollingBot {
 
-    private static final Logger LOGGER = LogManager.getLogger(StepsLog.class);
+    private static Logger logger = LoggerFactory.getLogger(BotService.class);
     private final CentralRussianBankService centralRussianBankService;
     private final ActiveChatRepository activeChatRepository;
     private final Map<Long, List<String>> previousCommands = new ConcurrentHashMap<>();
@@ -39,6 +37,8 @@ public class BotService extends TelegramLongPollingBot {
     private static final String ADD_SPEND = "/addspend";
     private final String CURRENT_RATES = "/currentrates";
     private final FinanceService financeService;
+
+
 
 
     @Value("${bot.api.key}")
@@ -84,6 +84,8 @@ public class BotService extends TelegramLongPollingBot {
                 response.setText(financeService.addFinanceOperation(getPreviousCommand(message.getChatId()), message.getText(), message.getChatId()));
             }
 
+            logger.error("It is an error logger.");
+
             putPreviousCommand(message.getChatId(), message.getText());
             execute(response);
             if (activeChatRepository.findActiveChatByChatId(chatId).isEmpty()) {
@@ -92,7 +94,7 @@ public class BotService extends TelegramLongPollingBot {
                 activeChatRepository.save(activeChat);
             }
         } catch (Exception e) {
-            LOGGER.error("Возникла неизвестная проблема, сообщите пожалуйста администратору", e);
+            logger.error("Возникла неизвестная проблема, сообщите пожалуйста администратору", e);
         }
     }
 
@@ -120,7 +122,7 @@ public class BotService extends TelegramLongPollingBot {
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {
-                LOGGER.error("Не удалось отправить сообщение", e);
+                logger.error("Не удалось отправить сообщение", e);
             }
         }
     }

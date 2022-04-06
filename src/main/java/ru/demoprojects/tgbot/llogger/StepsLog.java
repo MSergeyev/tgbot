@@ -1,24 +1,25 @@
 package ru.demoprojects.tgbot.llogger;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 
-public class StepsLog implements ApplicationRunner {
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.demoprojects.tgbot.controller.CurrencyController;
 
-    private static final Logger LOGGER = LogManager.getLogger(StepsLog.class);
 
-    @Override
-    public void run(ApplicationArguments applicationArguments) throws Exception {
-        LOGGER.debug("Debugging log");
-        LOGGER.info("Info log");
-        LOGGER.warn("Hey, This is a warning!");
-        LOGGER.error("Oops! We have an Error. OK");
-        LOGGER.fatal("Damn! Fatal error. Please fix me.");
-        LOGGER.info("start logger");
+@Slf4j
+public class StepsLog {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyController.class);
+
+
+    public static void main(String[] args) {
+        LOGGER.debug("Debug log message");
+        LOGGER.info("Info log message");
+        LOGGER.error("Error log message");
+
+
     }
-
 }
 
 

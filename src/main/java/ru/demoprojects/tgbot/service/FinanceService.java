@@ -4,7 +4,6 @@ package ru.demoprojects.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.demoprojects.tgbot.entity.Income;
 import ru.demoprojects.tgbot.entity.Spend;
 import ru.demoprojects.tgbot.repository.IncomeRepository;

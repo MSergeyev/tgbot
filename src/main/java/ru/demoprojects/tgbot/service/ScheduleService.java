@@ -1,12 +1,13 @@
 package ru.demoprojects.tgbot.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ru.demoprojects.tgbot.TgbotApplication;
 import ru.demoprojects.tgbot.dto.ValuteCursOnDate;
 import ru.demoprojects.tgbot.entity.ActiveChat;
 import ru.demoprojects.tgbot.llogger.StepsLog;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScheduleService {
 
-    private static final Logger LOGGER = LogManager.getLogger(StepsLog.class);
+    private static Logger logger = LoggerFactory.getLogger(ScheduleService.class);
     private final ActiveChatRepository activeChatRepository;
     private final BotService botService;
     private final CentralRussianBankService centralRussianBankService;
@@ -46,8 +47,9 @@ public class ScheduleService {
             } else {
                 previousRates.addAll(currentRates);
             }
+            logger.error("It is an error logger.");
         } catch (DatatypeConfigurationException e) {
-            LOGGER.error("Возникла ошибка сервисов"+(new File("log.txt")));
+            logger.error("Возникла ошибка сервисов"+(new File("log.txt")));
         }
     }
 }

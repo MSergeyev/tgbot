@@ -1,0 +1,19 @@
+<configuration>
+    <property name="LOG_APP" value="logs/logapp.log"/>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <File>${LOG_APP}/test.log</File>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="ru.demoprojects.tgbot.service.BotService" level="INFO"/>
+    <logger name="ru.demoprojects.tgbot.service.ScheduleService" level="INFO"/>
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender" >
+    </appender>
+
+    <root level="trace">
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>
